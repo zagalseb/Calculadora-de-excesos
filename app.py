@@ -275,9 +275,11 @@ if calcular:
             st.markdown(f"#### {icono} {nombre} — Final pedido: **{dim_final} mm**")
 
             c1, c2, c3 = st.columns(3)
-            c1.metric("Exceso a configurar",      f"{r['exceso_cfg']:.2f} mm")
-            c2.metric("Real esperado",            f"{r['real_esperado']:.2f} mm")
-            c3.metric("Rango de Exceso estimado", f"[{r['real_q05']:.2f} – {r['real_q95']:.2f}] mm")
+            c1.metric("Exceso a configurar", f"{r['exceso_cfg']:.2f} mm")
+            c2.metric("Real esperado",       f"{r['real_esperado']:.2f} mm")
+            with c3:
+                st.markdown("<p style='font-size:14px; margin-bottom:4px; color:gray'>Rango de Exceso estimado</p>", unsafe_allow_html=True)
+                st.markdown(f"<p style='font-size:28px; font-weight:700; margin:0'>{r['real_q05']:.2f} – {r['real_q95']:.2f} mm</p>", unsafe_allow_html=True)
 
             cumple_min = r['real_q05'] >= env_min
             if cumple_min:
