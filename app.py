@@ -274,20 +274,18 @@ if calcular:
         with st.container(border=True):
             st.markdown(f"#### {icono} {nombre} — Final pedido: **{dim_final} mm**")
 
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Exceso a configurar",   f"{r['exceso_cfg']} mm")
-            c2.metric("Real esperado",         f"{r['real_esperado']} mm")
-            c3.metric("Rango 90% (Q5 – Q95)", f"[{r['real_q05']} – {r['real_q95']}] mm")
-            c4.metric("Q5 histórico similares", f"{r['q05_hist']} mm")
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Exceso a configurar",      f"{r['exceso_cfg']:.2f} mm")
+            c2.metric("Real esperado",            f"{r['real_esperado']:.2f} mm")
+            c3.metric("Rango de Exceso estimado", f"[{r['real_q05']:.2f} – {r['real_q95']:.2f}] mm")
 
             cumple_min = r['real_q05'] >= env_min
             if cumple_min:
-                st.success(f"Q5 garantizado: {r['real_q05']} mm ≥ {env_min} mm ✅")
+                st.success(f"Q5 garantizado: {r['real_q05']:.2f} mm ≥ {env_min} mm ✅")
             else:
                 st.warning(
-                    f"Q5 garantizado: {r['real_q05']} mm < {env_min} mm — "
-                    f"Alta variabilidad. Q5 histórico de similares: {r['q05_hist']} mm. "
-                    f"Considera aumentar el margen o revisar el proceso."
+                    f"Q5 garantizado: {r['real_q05']:.2f} mm < {env_min} mm — "
+                    f"Alta variabilidad. Considera aumentar el margen o revisar el proceso."
                 )
 
     # --- Veredicto global ---
